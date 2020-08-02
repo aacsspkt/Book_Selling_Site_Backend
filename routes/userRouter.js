@@ -32,7 +32,7 @@ router.post('/register', (req, res, next) => {
 		profile
 	} = req.body;
 	
-	User.findById({username})
+	User.findOne({username})
 	.then(user => {
         if (user) {
             let err = new Error('User already exists!');
@@ -52,10 +52,10 @@ router.post('/register', (req, res, next) => {
 					
                 }).then(user => {
 					res.status(201).json(`Registration of username: ${username} is done!`);
-                }).catch(err);
+                }).catch(next);
             });
         }
-    })
+    }).catch(next);
 });
 
 router.post('/login', (req, res, next) => {
@@ -81,7 +81,6 @@ router.post('/login', (req, res, next) => {
 				role: user.role,
 				profile: user.profile
 			}
-		
             jwt.sign(payload, process.env.SECRET, (err, token) => {
                 if (err) {
                     return next(err);

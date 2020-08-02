@@ -4,7 +4,7 @@ const Book = require('../models/Book');
 const auth = require('./authentication');
 const User = require('../models/User');
 
-//-----------------------------Tested on June 24th after adding router book/book:id/inquiries/:inquiry_id ---------------------------
+//-----------------------------Done Debug on June 24th after adding router book/book:id/inquiries/:inquiry_id ---------------------------
 
 router.route('/')
 .get((req, res, next) => {
@@ -14,7 +14,7 @@ router.route('/')
         res.status(200).json(books);
     }).catch(next);
 })
-//done Testing
+//done Debug
 .post(auth.verifyUser, (req, res, next) => {
      const {
         title, isbn, author, publication, 
@@ -30,14 +30,14 @@ router.route('/')
     }).catch(next);
 })
 
-//Havent tested .delete
+//Havent Done Debug .delete
 .delete(auth.verifyUser, auth.verifyAdmin, (req, res, next) => {
     Book.deleteMany()
     .then(reply => {
         res.status(200).json(reply);
     }).catch(next);
 });
-//Tested
+//Done Debug
 router.route('/:book_id')
 .get((req, res, next) => {
 	Book.findById(req.params.book_id)
@@ -46,14 +46,14 @@ router.route('/:book_id')
         res.status(200).json(book);
     }).catch(next);
 })
-//Tested
+//Done Debug
 .put(auth.verifyUser, (req, res, next) => {
 	Book.findById(req.params.book_id)
 	.then(book => {
 		const err = auth.verifyOwnerOfBook(book.owner, req.user.id);
 		if (err) 
 			return next(err);
-
+		//to avoid update inquiries.
 		book.title = req.body.title;
 		book.isbn = req.body.isbn;
 		book.author = req.body.author;
@@ -72,7 +72,7 @@ router.route('/:book_id')
 	}).catch(next);
 	   
 })
-//Tested
+//Done Debug
 .delete(auth.verifyUser, (req, res, next) => {
 	Book.findById(req.params.book_id)
 	.then(book => {
@@ -85,7 +85,7 @@ router.route('/:book_id')
 			})
 	}).catch(next);
 });	
-//Tested
+//Done Debug
 router.route('/:book_id/inquiries')
 .get(auth.verifyUser, (req, res, next) => {
     Book.findById(req.params.book_id)
@@ -94,7 +94,7 @@ router.route('/:book_id/inquiries')
     }).catch(next);
 })
 
-//Tested
+//Done Debug
 .post(auth.verifyUser, (req, res, next) => {
     Book.findById(req.params.book_id)
     .then(book => {
@@ -126,7 +126,7 @@ router.route("/:book_id/inquiries/:inquiry_id")
         res.status(200).json(inquiry);
     })
 })
-//Tested
+//Done Debug
 .put(auth.verifyUser, (req, res, next) => {
     Book.findById(req.params.book_id)
     .then(book => {
@@ -161,7 +161,7 @@ router.route("/:book_id/inquiries/:inquiry_id")
     }).catch(next);
 })
 
-//------TESTED UPTO HERE---------
+//------Done Debug UPTO HERE---------
 
 
 

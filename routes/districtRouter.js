@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const District = require('../models/District');
+const auth = require('./authentication');
 
 //DONE TESTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -11,14 +12,23 @@ router.route('/')
         res.status(200).json(districts); //status = success!
     }).catch(next);
 })
-.post((req, res, next) => {
-    District.create(req.body)
-    .then(district => {
-        res.status(201).json(district);//status = created!!
-    }).catch(err => next(err));
+.post(auth.verifyUser, auth.verifyAdmin,(req, res, next) => {
+		 District.findOne({name: req.body.name})
+		 .then(district => {
+			 if (district) {
+				let err = new Error('District already exists!');
+				err.status = 403;
+				next(err);
+			 } else {
+			District.create(req.body)
+				.then(district => {res.status(201).json(district)})
+				.catch(err => next(err));
+			}
+			
+		 }).catch(next);
 })
 
-.delete((req, res, next) => {
+.delete(auth.verifyUser, auth.verifyAdmin, (req, res, next) => {
     District.deleteMany({})
     .then(reply => {
         res.json(reply);
@@ -32,13 +42,13 @@ router.route('/:district_id')
         res.json(district);
     }).catch(err => next(err));
 })
-.put((req,res,next) => {
+.put(auth.verifyUser, auth.verifyAdmin, (req,res,next) => {
     District.findByIdAndUpdate(req.params.district_id, {$set: req.body},{new: true})
     .then(district => {
         res.json(district);
     }).catch(err => next(err));
 })
-.delete((req,res,next) => {
+.delete(auth.verifyUser, auth.verifyAdmin, (req,res,next) => {
     District.deleteOne({ _id: req.params.district_id})
     .then(reply => {
         res.json(reply);

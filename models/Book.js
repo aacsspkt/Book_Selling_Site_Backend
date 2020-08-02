@@ -61,7 +61,10 @@ title: {
     homeDelivery: {
         type: Boolean,
         required: true
-    },
+	},
+	cost: {
+		type: Number
+	},
     category: {  // reference: One to Squillion
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',

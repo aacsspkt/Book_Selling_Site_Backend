@@ -27,11 +27,9 @@ const profileSchema = new mongoose.Schema({
 	contact: { 
 		mobileNo: {
 			type: String,
-			required: true
 		},
 		phoneNo: {
 			type: String,
-			required: true
 		},
 		hidePhone: {
 			type: Boolean,
