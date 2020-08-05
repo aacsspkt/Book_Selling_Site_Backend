@@ -35,4 +35,25 @@ router.route('/')
     res.json({status: 'success', file: req.file});
 });
 
+router.route('/:imgName')
+.get((req, res, next) => {
+	const options = {
+		root: './public/uploads',
+		dotfiles: 'deny',
+		headers: {
+		  'x-timestamp': Date.now(),
+		  'x-sent': true
+		}
+	  }
+	  const fileName = req.params.imgName;
+
+	  res.sendFile(fileName, options, function (err) {
+		if (err) {
+		  next(err)
+		} else {
+		  console.log('Sent:', fileName)
+		}
+	  });
+})
+
 module.exports = router; 
