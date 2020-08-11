@@ -18,12 +18,12 @@ router.route('/')
 .post(auth.verifyUser, (req, res, next) => {
      const {
         title, isbn, author, publication, 
-        image, language, totalPage, 
+        image, language, totalPage, cost,
 		condition, homeDelivery, category
 	} = req.body;
 	console.log(req.body);
     Book.create({title, isbn, author, publication, 
-		image, language, totalPage, condition, 
+		image, language, totalPage, condition, cost,
 		homeDelivery, category, owner: req.user.id})
     .then((book) => {
         res.status(201).json(book);
@@ -64,6 +64,7 @@ router.route('/:book_id')
 		book.condition = req.body.condition;
 		book.homeDelivery = req.body.homeDelivery;
 		book.category = req.body.category;
+		book.cost = req.body.cost;
 
 		book.save()
 		.then(book => {
