@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
+const validators = require('../utils/validators');
+
 //.get Tests done!!
 router.route('/')
 .get((req, res, next) => {
@@ -24,6 +26,13 @@ router.route('/:user_id')
 // Register:Test Done!!
 // Login: Test Done !!(Jwt token in generated successfully!)
 router.post('/register', (req, res, next) => {
+	let { errors, isValid } = validators.RegisterInput(req.body);
+    if (!isValid) {
+        return res.status(400).json({
+            status: 'error',
+            message: errors
+        });
+    }
     let {
         username,
         password,

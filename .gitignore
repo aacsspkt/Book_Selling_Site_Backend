@@ -1,7 +1,10 @@
 node_modules
+coverage
 .env
 data.json
 .env_backUp
 SchemaDiagram.jpg
 public
+globalConfig.json
+
 

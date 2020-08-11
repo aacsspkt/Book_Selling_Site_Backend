@@ -17,7 +17,7 @@ const inquirySchema = new mongoose.Schema({
 });
 
 const bookSchema = new mongoose.Schema({
-title: {
+	title: {
         type: String,
         maxlength: 100,
         required: true,
@@ -63,7 +63,8 @@ title: {
         required: true
 	},
 	cost: {
-		type: Number
+		type: Number,
+		required: true
 	},
     category: {  // reference: One to Squillion
         type: mongoose.Schema.Types.ObjectId,

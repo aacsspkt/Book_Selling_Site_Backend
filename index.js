@@ -11,7 +11,8 @@ const bookRouter = require('./routes/bookRouter');
 const categoryRouter = require('./routes/categoryRouter');
 const districtRouter = require('./routes/districtRouter');
 const uploadRouter = require('./routes/upload');
-const auth = require('./routes/authentication');
+const auth = require('./routes/authentication'); 
+
 
 const app = express();
 app.use(cors());
@@ -36,7 +37,7 @@ app.use('/api/profiles', profileRouter);
 app.use('/api/books', bookRouter);
 app.use('/api/categories', categoryRouter);
 app.use('/api/districts', districtRouter);
-app.use('/api/image', uploadRouter);
+app.use('/api/uploads', uploadRouter);
 
 app.use((req, res, next) =>  {
     let err = Error('Error');
