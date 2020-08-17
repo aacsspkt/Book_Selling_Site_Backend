@@ -38,7 +38,6 @@ router.post('/register', (req, res, next) => {
         password,
 		email,
 		role, 
-		profile
 	} = req.body;
 	
 	User.findOne({username})
@@ -56,8 +55,6 @@ router.post('/register', (req, res, next) => {
 					password: hash,
 					email,
 					role,
-					profile
-					
                 }).then(user => {
 					res.status(201).json(`Registration of username: ${username} is done!`);
                 }).catch(next);
@@ -87,7 +84,6 @@ router.post('/login', (req, res, next) => {
                 id: user.id,
                 username: user.username,
 				role: user.role,
-				profile: user.profile
 			}
             jwt.sign(payload, process.env.SECRET, (err, token) => {
                 if (err) {

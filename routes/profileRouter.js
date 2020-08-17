@@ -1,6 +1,7 @@
 const express = require('express');
 const Profile = require('../models/Profile.js');
 const router = express.Router();
+const auth = require('./authentication');
 //Done Testing Jul 6th
 
 router.route('/')
@@ -8,13 +9,12 @@ router.route('/')
 	Profile.find()
 	.then(profiles => res.status(200).json(profiles));
 })
-.post((req, res, next) => {
-	const profile = {
+.post(auth.verifyUser, (req, res, next) => {
+	 const {
 		firstName, lastName, address,
-		contact, profiePhoto
+		contact, profilePhoto, 
 	} = req.body;
-
-	Profile.create(profile)
+	Profile.create({firstName, lastName, address, contact, profilePhoto, user: req.user.id})
 	.then(profile => res.status(201).json(profile))
 	.catch(next);
 });

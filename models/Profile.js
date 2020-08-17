@@ -32,7 +32,7 @@ const profileSchema = new mongoose.Schema({
 		},
 		hidePhone: {
 			type: Boolean,
-			required: true
+			default: false
 		}
 	},
 	profilePhoto: {
@@ -43,6 +43,10 @@ const profileSchema = new mongoose.Schema({
         min: 0,
         default: 0
 	},
+	user: {
+		type: mongoose.Types.ObjectId,
+		ref:'User'
+	}
 });
 
 module.exports = mongoose.model('Profile', profileSchema);
