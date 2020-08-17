@@ -9,8 +9,8 @@ const validators = require('../utils/validators');
 router.route('/')
 .get((req, res, next) => {
 	User.find({})
-	.then(Users => {
-		res.status(200).json(Users);
+	.then(users => {
+		res.status(200).json(users);
 	}).catch(next);
 });
 
@@ -18,8 +18,8 @@ router.route('/:user_id')
 .get((req, res, next) => {
 	User.findById(req.params.user_id)
 	.populate('profile')
-	.then(User => {
-		res.status(200).json(User);
+	.then(user => {
+		res.status(200).json(user.profile);
 	}).catch(next);
 });
 
@@ -49,8 +49,7 @@ router.post('/register', (req, res, next) => {
             return next(err);
         } else {
             bcrypt.hash(password, 10, (err, hash) => {
-                if (err) 
-                    next(err);
+                if (err) next(err);
                 
                 User.create({
                     username,

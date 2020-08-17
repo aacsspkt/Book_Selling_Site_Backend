@@ -25,7 +25,7 @@ const bookSchema = new mongoose.Schema({
     isbn: {
         type: String,
         minlength: 10,
-        maxlength: 13
+        maxlength: 13,
     },
     author: {
         type: String,
@@ -56,7 +56,8 @@ const bookSchema = new mongoose.Schema({
     },
     deliveryArea: {
         type: String,
-        enum: ['Near my area', 'Within city', 'All over Nepal']
+		enum: ['Near my area', 'Within city', 'All over Nepal'],
+		required: true
     },
     homeDelivery: {
         type: Boolean,

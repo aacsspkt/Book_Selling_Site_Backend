@@ -19,12 +19,14 @@ router.route('/')
      const {
         title, isbn, author, publication, 
         image, language, totalPage, cost,
-		condition, homeDelivery, category
+		condition, homeDelivery, category,
+		deliveryArea
 	} = req.body;
 	console.log(req.body);
     Book.create({title, isbn, author, publication, 
 		image, language, totalPage, condition, cost,
-		homeDelivery, category, owner: req.user.id})
+		homeDelivery, category, deliveryArea,
+		 owner: req.user.id})
     .then((book) => {
         res.status(201).json(book);
     }).catch(next);
@@ -42,6 +44,7 @@ router.route('/:book_id')
 .get((req, res, next) => {
 	Book.findById(req.params.book_id)
 	.populate('category')
+	.populate('owner')
     .then(book => {
         res.status(200).json(book);
     }).catch(next);
@@ -65,6 +68,7 @@ router.route('/:book_id')
 		book.homeDelivery = req.body.homeDelivery;
 		book.category = req.body.category;
 		book.cost = req.body.cost;
+		book.deliveryArea = req.body.deliveryArea;
 
 		book.save()
 		.then(book => {
