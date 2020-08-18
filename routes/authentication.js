@@ -19,7 +19,7 @@ function verifyUser(req, res, next) {
             return next(err);
         } else { // verified!
 			req.user = payload;
-			console.log("verified User")
+			console.log(req.user);
             next();
         }
     })
@@ -52,8 +52,7 @@ function verifyOwnerOfInquiry(inquiryAuthor, user_id) {
 };
 
 function verifyOwnerOfBook(owner, user_id) {
-	// console.log(typeof(owner) + " " + typeof(user_id));
-	// console.log(owner.toString() +" " + user_id);
+	
 	if (owner.toString() !== user_id) {
         let err = new Error('You are allowed to update/delete own book only.');
         err.status = 401;

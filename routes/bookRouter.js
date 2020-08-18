@@ -26,7 +26,7 @@ router.route('/')
     Book.create({title, isbn, author, publication, 
 		image, language, totalPage, condition, cost,
 		homeDelivery, category, deliveryArea,
-		 owner: req.user.id})
+		 owner: req.user.profileId})
     .then((book) => {
         res.status(201).json(book);
     }).catch(next);

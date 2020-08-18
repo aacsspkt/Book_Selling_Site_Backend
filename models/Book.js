@@ -22,11 +22,6 @@ const bookSchema = new mongoose.Schema({
         maxlength: 100,
         required: true,
     },
-    isbn: {
-        type: String,
-        minlength: 10,
-        maxlength: 13,
-    },
     author: {
         type: String,
         maxlength: 50,
@@ -41,15 +36,6 @@ const bookSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    language: {
-        type: String,
-        maxlength: 10,
-        required: true
-    },
-    totalPage: {
-        type: Number,
-        max: 1000
-    },
     condition: {
         type: String,
         enum: ['New', 'Old']
@@ -59,10 +45,6 @@ const bookSchema = new mongoose.Schema({
 		enum: ['Near my area', 'Within city', 'All over Nepal'],
 		required: true
     },
-    homeDelivery: {
-        type: Boolean,
-        required: true
-	},
 	cost: {
 		type: Number,
 		required: true
@@ -75,7 +57,7 @@ const bookSchema = new mongoose.Schema({
 	inquiries: [ inquirySchema ], //Embedding: One to few
 	owner: {
 		type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'Profile'
 	}
 },
 {timestamps: true});

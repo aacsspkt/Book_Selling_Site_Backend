@@ -4,6 +4,7 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const validators = require('../utils/validators');
+const Profile = require('../models/Profile');
 
 //.get Tests done!!
 router.route('/')
@@ -48,13 +49,14 @@ router.post('/register', (req, res, next) => {
             return next(err);
         } else {
             bcrypt.hash(password, 10, (err, hash) => {
-                if (err) next(err);
-                
+				if (err) next(err);
+				
                 User.create({
                     username,
 					password: hash,
 					email,
 					role,
+
                 }).then(user => {
 					res.status(201).json(`Registration of username: ${username} is done!`);
                 }).catch(next);
@@ -79,18 +81,25 @@ router.post('/login', (req, res, next) => {
                 let err = new Error('Password does not match!');
                 err.status = 404;
                 return next(err);
-            }
-            let payload = {
-                id: user.id,
-                username: user.username,
-				role: user.role,
 			}
-            jwt.sign(payload, process.env.SECRET, (err, token) => {
-                if (err) {
-                    return next(err);
-                }
-                res.json({status: 'Login Sucessful', token: `Bearer ${token}`})
-            });
+
+			Profile.findOne({user: user.id})
+			.then(profile => {
+				let payload = {
+					id: user.id,
+					username: user.username,
+					role: user.role,
+					profileId: profile.id
+				}
+				jwt.sign(payload, process.env.SECRET, (err, token) => {
+					if (err) {
+						return next(err);
+					}
+					res.json({status: 'Login Sucessful', token: `Bearer ${token}`})
+				});
+			})
+
+          
 
         }).catch(next);
 
