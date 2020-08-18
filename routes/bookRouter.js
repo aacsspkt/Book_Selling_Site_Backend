@@ -16,29 +16,13 @@ router.route('/')
 })
 //done Debug
 .post(auth.verifyUser, (req, res, next) => {
-     const {
-        title, isbn, author, publication, 
-        image, language, totalPage, cost,
-		condition, homeDelivery, category,
-		deliveryArea
-	} = req.body;
 	console.log(req.body);
-    Book.create({title, isbn, author, publication, 
-		image, language, totalPage, condition, cost,
-		homeDelivery, category, deliveryArea,
-		 owner: req.user.profileId})
+	Book.create({... req.body, owner: req.user.profileId})
     .then((book) => {
         res.status(201).json(book);
     }).catch(next);
-})
-
-//Havent Done Debug .delete
-.delete(auth.verifyUser, auth.verifyAdmin, (req, res, next) => {
-    Book.deleteMany()
-    .then(reply => {
-        res.status(200).json(reply);
-    }).catch(next);
 });
+
 //Done Debug
 router.route('/:book_id')
 .get((req, res, next) => {
@@ -53,19 +37,13 @@ router.route('/:book_id')
 .put(auth.verifyUser, (req, res, next) => {
 	Book.findById(req.params.book_id)
 	.then(book => {
-		const err = auth.verifyOwnerOfBook(book.owner, req.user.id);
-		if (err) 
-			return next(err);
-		//to avoid update inquiries.
+		const err = auth.verifyOwnerOfBook(book.owner, req.user.profileId);
+		if (err) return next(err);
 		book.title = req.body.title;
-		book.isbn = req.body.isbn;
 		book.author = req.body.author;
 		book.publication = req.body.publication;
 		book.image = req.body.image;
-		book.language = req.body.language;
-		book.totalPage = req.body.totalPage;
 		book.condition = req.body.condition;
-		book.homeDelivery = req.body.homeDelivery;
 		book.category = req.body.category;
 		book.cost = req.body.cost;
 		book.deliveryArea = req.body.deliveryArea;

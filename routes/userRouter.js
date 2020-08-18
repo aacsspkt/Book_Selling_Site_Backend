@@ -56,7 +56,6 @@ router.post('/register', (req, res, next) => {
 					password: hash,
 					email,
 					role,
-
                 }).then(user => {
 					res.status(201).json(`Registration of username: ${username} is done!`);
                 }).catch(next);
@@ -82,14 +81,26 @@ router.post('/login', (req, res, next) => {
                 err.status = 404;
                 return next(err);
 			}
-
+			console.log("user.id"+ user.id);
 			Profile.findOne({user: user.id})
 			.then(profile => {
-				let payload = {
-					id: user.id,
-					username: user.username,
-					role: user.role,
-					profileId: profile.id
+				let payload;
+				if (profile !== null) {
+					console.log("not null Profile");
+					payload = {
+						id: user.id,
+						username: user.username,
+						role: user.role,
+						profileId: profile.id
+					}
+				} else {
+					console.log("null" + profile);
+					payload = {
+						id: user.id,
+						username: user.username,
+						role: user.role,
+					}
+				
 				}
 				jwt.sign(payload, process.env.SECRET, (err, token) => {
 					if (err) {
@@ -98,11 +109,7 @@ router.post('/login', (req, res, next) => {
 					res.json({status: 'Login Sucessful', token: `Bearer ${token}`})
 				});
 			})
-
-          
-
         }).catch(next);
-
 	}).catch(next);
 });
 
