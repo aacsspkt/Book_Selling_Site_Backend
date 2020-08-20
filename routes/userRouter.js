@@ -4,13 +4,14 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const validators = require('../utils/validators');
+const Profile = require('../models/Profile');
 
 //.get Tests done!!
 router.route('/')
 .get((req, res, next) => {
 	User.find({})
-	.then(Users => {
-		res.status(200).json(Users);
+	.then(users => {
+		res.status(200).json(users);
 	}).catch(next);
 });
 
@@ -18,8 +19,8 @@ router.route('/:user_id')
 .get((req, res, next) => {
 	User.findById(req.params.user_id)
 	.populate('profile')
-	.then(User => {
-		res.status(200).json(User);
+	.then(user => {
+		res.status(200).json(user.profile);
 	}).catch(next);
 });
 
@@ -38,7 +39,6 @@ router.post('/register', (req, res, next) => {
         password,
 		email,
 		role, 
-		profile
 	} = req.body;
 	
 	User.findOne({username})
@@ -49,16 +49,13 @@ router.post('/register', (req, res, next) => {
             return next(err);
         } else {
             bcrypt.hash(password, 10, (err, hash) => {
-                if (err) 
-                    next(err);
-                
+				if (err) next(err);
+				
                 User.create({
                     username,
 					password: hash,
 					email,
 					role,
-					profile
-					
                 }).then(user => {
 					res.status(201).json(`Registration of username: ${username} is done!`);
                 }).catch(next);
@@ -83,22 +80,35 @@ router.post('/login', (req, res, next) => {
                 let err = new Error('Password does not match!');
                 err.status = 404;
                 return next(err);
-            }
-            let payload = {
-                id: user.id,
-                username: user.username,
-				role: user.role,
-				profile: user.profile
 			}
-            jwt.sign(payload, process.env.SECRET, (err, token) => {
-                if (err) {
-                    return next(err);
-                }
-                res.json({status: 'Login Sucessful', token: `Bearer ${token}`})
-            });
-
+			console.log("user.id"+ user.id);
+			Profile.findOne({user: user.id})
+			.then(profile => {
+				let payload;
+				if (profile !== null) {
+					console.log("not null Profile");
+					payload = {
+						id: user.id,
+						username: user.username,
+						role: user.role,
+						profileId: profile.id
+					}
+				} else {
+					console.log("null" + profile);
+					payload = {
+						id: user.id,
+						username: user.username,
+						role: user.role,
+					}
+				}
+				jwt.sign(payload, process.env.SECRET, (err, token) => {
+					if (err) {
+						return next(err);
+					}
+					res.json({status: 'Login Sucessful', token: `Bearer ${token}`})
+				});
+			})
         }).catch(next);
-
 	}).catch(next);
 });
 
