@@ -100,7 +100,6 @@ router.post('/login', (req, res, next) => {
 						username: user.username,
 						role: user.role,
 					}
-				
 				}
 				jwt.sign(payload, process.env.SECRET, (err, token) => {
 					if (err) {

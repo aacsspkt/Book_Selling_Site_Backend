@@ -38,7 +38,8 @@ const bookSchema = new mongoose.Schema({
     },
     condition: {
         type: String,
-        enum: ['New', 'Old']
+		enum: ['New', 'Old'],
+		required: true
     },
     deliveryArea: {
         type: String,
@@ -57,7 +58,8 @@ const bookSchema = new mongoose.Schema({
 	inquiries: [ inquirySchema ], //Embedding: One to few
 	owner: {
 		type: mongoose.Schema.Types.ObjectId,
-        ref: 'Profile'
+		ref: 'Profile',
+		required: true
 	}
 },
 {timestamps: true});
