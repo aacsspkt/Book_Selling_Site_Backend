@@ -1,20 +1,4 @@
 const mongoose = require('mongoose');
-const User = require('./User');
-
-const inquirySchema = new mongoose.Schema({
-    author: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    inquiry: {
-        type: String,
-        required: true
-    },
-    date: {
-        type: Date,
-        default: Date.now
-    }
-});
 
 const bookSchema = new mongoose.Schema({
 	title: {
@@ -50,12 +34,11 @@ const bookSchema = new mongoose.Schema({
 		type: Number,
 		required: true
 	},
-    category: {  // reference: One to Squillion
+    category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
         required: true
 	},
-	inquiries: [ inquirySchema ], //Embedding: One to few
 	owner: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Profile',

@@ -2,7 +2,6 @@ const express = require('express');
 const Profile = require('../models/Profile.js');
 const router = express.Router();
 const auth = require('./authentication');
-//Done Testing Jul 6th
 
 router.route('/')
 .get((req, res, next) => {

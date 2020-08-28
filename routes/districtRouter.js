@@ -3,13 +3,11 @@ const router = express.Router();
 const District = require('../models/District');
 const auth = require('./authentication');
 
-//DONE TESTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 router.route('/')
 .get((req, res, next) =>{
     District.find()
     .then((districts) => {
-        res.status(200).json(districts); //status = success!
+        res.status(200).json(districts);
     }).catch(next);
 })
 .post(auth.verifyUser, auth.verifyAdmin,(req, res, next) => {
@@ -24,7 +22,6 @@ router.route('/')
 				.then(district => {res.status(201).json(district)})
 				.catch(err => next(err));
 			}
-			
 		 }).catch(next);
 })
 

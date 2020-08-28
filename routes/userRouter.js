@@ -6,7 +6,6 @@ const router = express.Router();
 const validators = require('../utils/validators');
 const Profile = require('../models/Profile');
 
-//.get Tests done!!
 router.route('/')
 .get((req, res, next) => {
 	User.find({})
@@ -24,8 +23,6 @@ router.route('/:user_id')
 	}).catch(next);
 });
 
-// Register:Test Done!!
-// Login: Test Done !!(Jwt token in generated successfully!)
 router.post('/register', (req, res, next) => {
 	let { errors, isValid } = validators.RegisterInput(req.body);
     if (!isValid) {
@@ -57,7 +54,7 @@ router.post('/register', (req, res, next) => {
 					email,
 					role,
                 }).then(user => {
-					res.status(201).json(`Registration of username: ${username} is done!`);
+					res.status(201).json({_id: user._id, username: user.username, email: user.email, role: user.role});
                 }).catch(next);
             });
         }
@@ -74,19 +71,17 @@ router.post('/login', (req, res, next) => {
             return next(err);
         }
 
-		bcrypt.compare(password, user.password) // comparing pass from user input and from database.
+		bcrypt.compare(password, user.password)
 		.then(isMatched => {
             if (!isMatched) {
                 let err = new Error('Password does not match!');
                 err.status = 404;
                 return next(err);
 			}
-			console.log("user.id"+ user.id);
 			Profile.findOne({user: user.id})
 			.then(profile => {
 				let payload;
 				if (profile !== null) {
-					console.log("not null Profile");
 					payload = {
 						id: user.id,
 						username: user.username,
@@ -94,7 +89,6 @@ router.post('/login', (req, res, next) => {
 						profileId: profile.id
 					}
 				} else {
-					console.log("null" + profile);
 					payload = {
 						id: user.id,
 						username: user.username,

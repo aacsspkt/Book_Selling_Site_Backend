@@ -18,7 +18,7 @@ const profileSchema = new mongoose.Schema({
 			type: String,
 			required: true
 		},
-		areaLocation: {    //Value need to ne inserted before creation of User.
+		areaLocation: {   
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'District',
 		}

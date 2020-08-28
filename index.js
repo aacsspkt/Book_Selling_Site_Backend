@@ -4,15 +4,12 @@ const path = require('path');
 const cors = require('cors');
 require('dotenv').config();
 
-
 const userRouter = require('./routes/userRouter');
 const profileRouter = require	('./routes/profileRouter');
 const bookRouter = require('./routes/bookRouter');
 const categoryRouter = require('./routes/categoryRouter');
 const districtRouter = require('./routes/districtRouter');
 const uploadRouter = require('./routes/upload');
-const auth = require('./routes/authentication'); 
-
 
 const app = express();
 app.use(cors());

@@ -15,18 +15,13 @@ const RegisterInput = (data) => {
         }
     } else errors.password = 'Password is required.';
 
-    // if (data.firstName) {
-    //     if (!validator.isLength(data.firstName.trim(), { min: 2, max: 30 })) {
-    //         errors.firstName = 'First name must be between 2 and 30 characters';
-    //     }
-    // } else errors.firstName = 'First name is required';
+	if (data.email) {
+        if (!validator.isLength(data.email.trim(), { min: 5})) {
+            errors.password = 'Email cannot be less than 5 characters.';
+        }
+    } else errors.password = 'Email is required.';
 
-    // if (data.lastName) {
-    //     if (!validator.isLength(data.lastName.trim(), { min: 2, max: 30 })) {
-    //         errors.lastName = 'Last name must be between 2 and 30 characters'
-    //     }
-    // } else errors.lastName = 'Last name is required'
-
+  
     return {
         errors,
         isValid: Object.keys(errors).length === 0

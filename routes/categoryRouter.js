@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Category = require('../models/Category')
 
-//Done Testing Jun 20!!
 router.route('/')
 .get((req, res, next) => {
     Category.find({})
@@ -16,7 +15,6 @@ router.route('/')
     .then(category => {
         res.status(201).json(category);
     }).catch(next);
-  
 })
 
 .delete((req, res, next) => {
@@ -24,7 +22,6 @@ router.route('/')
     .then(reply => {
         res.status(200).json(reply);
     }).catch(next);
-  
 })
 
 router.route('/:category_id')
@@ -33,7 +30,6 @@ router.route('/:category_id')
     .then(category => {
         res.status(200).json(category);
     }).catch(next);
-
 })
 
 .put((req, res, next) => {
