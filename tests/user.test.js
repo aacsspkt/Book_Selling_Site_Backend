@@ -53,6 +53,16 @@ describe('Test of User Route', () => {
 			expect(res.body.message.password).toBe("Password must be between 6 and 30 characters.");
 		})
 	})
+	test('should NOT be able to register a user with duplicate username', () => {
+		return request(app).post('/users/register')
+		.send({
+			username: '321test',
+			password: '321test',
+			email: 'test@gmail.com', 
+		}).then((res) => { 
+			expect(res.statusCode).toBe(401);
+		})
+	})
 
 	test('should be able to login and generate token', () => {
 		return request(app).post('/users/login')
@@ -62,6 +72,24 @@ describe('Test of User Route', () => {
 		}).then(res => {
 			expect(res.statusCode).toBe(200);
 			expect(res.body.token).not.toBe('undefined');
+		})
+	})
+	test('should NOT be able to login with non-exist user', () => {
+		return request(app).post('/users/login')
+		.send({
+			username: 'USER-NOT-FOUND',
+			password: '321test'
+		}).then(res => {
+			expect(res.statusCode).toBe(401);
+		})
+	})
+	test('should NOT be able to login with wrong password', () => {
+		return request(app).post('/users/login')
+		.send({
+			username: '321test',
+			password: 'WRONG-PASSWORD'
+		}).then(res => {
+			expect(res.statusCode).toBe(401);
 		})
 	})
 })

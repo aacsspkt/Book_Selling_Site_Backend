@@ -6,22 +6,22 @@ const router = express.Router();
 const validators = require('../utils/validators');
 const Profile = require('../models/Profile');
 
-router.route('/')
-.get((req, res, next) => {
-	User.find({})
-	.then(users => {
-		res.status(200).json(users);
-	}).catch(next);
-});
+// router.route('/')
+// .get((req, res, next) => {
+// 	User.find({})
+// 	.then(users => {
+// 		res.status(200).json(users);
+// 	}).catch(next);
+// });
 
-router.route('/:user_id')
-.get((req, res, next) => {
-	User.findById(req.params.user_id)
-	.populate('profile')
-	.then(user => {
-		res.status(200).json(user.profile);
-	}).catch(next);
-});
+// router.route('/:user_id')
+// .get((req, res, next) => {
+// 	User.findById(req.params.user_id)
+// 	.populate('profile')
+// 	.then(user => {
+// 		res.status(200).json(user.profile);
+// 	}).catch(next);
+// });
 
 router.post('/register', (req, res, next) => {
 	let { errors, isValid } = validators.RegisterInput(req.body);
@@ -75,7 +75,7 @@ router.post('/login', (req, res, next) => {
 		.then(isMatched => {
             if (!isMatched) {
                 let err = new Error('Password does not match!');
-                err.status = 404;
+                err.status = 401;
                 return next(err);
 			}
 			Profile.findOne({user: user.id})
@@ -101,7 +101,7 @@ router.post('/login', (req, res, next) => {
 					}
 					res.json({status: 'Login Sucessful', token: `Bearer ${token}`})
 				});
-			})
+			}).catch(next);
         }).catch(next);
 	}).catch(next);
 });

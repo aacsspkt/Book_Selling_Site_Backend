@@ -21,6 +21,7 @@ const profileSchema = new mongoose.Schema({
 		areaLocation: {   
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'District',
+			required: true
 		}
 	},
 	contact: { 

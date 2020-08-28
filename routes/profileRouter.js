@@ -4,10 +4,6 @@ const router = express.Router();
 const auth = require('./authentication');
 
 router.route('/')
-.get((req, res, next) => {
-	Profile.find()
-	.then(profiles => res.status(200).json(profiles));
-})
 .post(auth.verifyUser, (req, res, next) => {
 	 const {
 		firstName, lastName, address,
