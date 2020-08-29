@@ -22,12 +22,6 @@ function verifyUser(req, res, next) {
 };
 
 function verifyAdmin(req, res, next) {
-
-    if (!req.user) {
-        let err = new Error('No authentication information');
-		err.status = 401;
-        return next(err);
-    }
     if (req.user.role !== 'admin') {
         let err = new Error('Forbidden');
         err.status = 403;
@@ -36,15 +30,6 @@ function verifyAdmin(req, res, next) {
     next();
 }
 
-function verifyOwnerOfBook(owner, user_id) {
-	if (owner.toString() !== user_id) {
-        let err = new Error('You are allowed to update/delete own book only.');
-        err.status = 401;
-        return err;
-    }
-	return;
-}
-
 module.exports = {
-    verifyUser, verifyAdmin, verifyOwnerOfBook,
+    verifyUser, verifyAdmin
 }

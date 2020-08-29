@@ -1,10 +1,13 @@
 const request = require('supertest');
 const express = require('express');
 require('dotenv').config();
+
 const userRouter = require('../routes/userRouter');
 const profileRouter = require('../routes/profileRouter');
 const districtRouter = require('../routes/districtRouter');
+
 const app = express();
+
 app.use(express.json());
 app.use('/users', userRouter);
 app.use('/profiles', profileRouter);
@@ -19,7 +22,7 @@ beforeAll(() => {
 		username: 'test1234',
 		password: 'test1234',
 		email: 'test@gmail.com',
-		role: 'admin'
+		role: 'admin' 
 	})
 	.then(res => {
 		return request(app).post('/users/login')
@@ -38,7 +41,7 @@ beforeAll(() => {
 	});
 });
 
-describe('Test of Profile Route due', () => {
+describe('Test of Profile Router', () => {
     test('should be able to POST a profile', () => {
 		return request(app).post('/profiles')
 		.set('authorization', token)

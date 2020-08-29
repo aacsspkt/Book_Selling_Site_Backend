@@ -39,8 +39,6 @@ beforeAll(() => {
 			expect(res.statusCode).toBe(201);
 			expect(res.body.name).toBe('Non-finction');	
 			categoryId = res.body._id;	
-
-
 		});
 	})
 	test('should be able to GET array of category', () => {
@@ -48,7 +46,7 @@ beforeAll(() => {
 		.set('authorization', token)
 		.then(res => {
 			expect(res.statusCode).toBe(200);
-			expect(res.body.[0].name).toBe('Non-finction');		
+			expect(res.body[0].name).toBe('Non-finction');		
 		});
 	})
 	test('should be able to GET a category', () => {
@@ -75,5 +73,4 @@ beforeAll(() => {
 			expect(res.statusCode).toBe(200);
 		});
 	})
-
 })
