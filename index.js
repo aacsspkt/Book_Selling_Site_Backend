@@ -14,7 +14,7 @@ const uploadRouter = require('./routes/upload');
 const app = express();
 app.use(cors());
 mongoose.connect(process.env.DbURI,{
-    useNewUrlparser: true,
+    useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: true
 })

@@ -6,23 +6,6 @@ const router = express.Router();
 const validators = require('../utils/validators');
 const Profile = require('../models/Profile');
 
-// router.route('/')
-// .get((req, res, next) => {
-// 	User.find({})
-// 	.then(users => {
-// 		res.status(200).json(users);
-// 	}).catch(next);
-// });
-
-// router.route('/:user_id')
-// .get((req, res, next) => {
-// 	User.findById(req.params.user_id)
-// 	.populate('profile')
-// 	.then(user => {
-// 		res.status(200).json(user.profile);
-// 	}).catch(next);
-// });
-
 router.post('/register', (req, res, next) => {
 	let { errors, isValid } = validators.RegisterInput(req.body);
     if (!isValid) {

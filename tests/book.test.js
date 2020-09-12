@@ -89,8 +89,8 @@ describe('Test of Book Router', () => {
 		})
 		.then(res => {
 			bookId = res.body._id;
-			expect(res.statusCode).toBe(201);
 			console.log(res)
+			expect(res.statusCode).toBe(201);
 		})
 	});
 

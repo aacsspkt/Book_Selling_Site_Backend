@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const Profile = require('./Profile');
-const Book = require('./Book');
 
 const userSchema = new mongoose.Schema({
     username: {

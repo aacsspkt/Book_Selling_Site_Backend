@@ -56,7 +56,7 @@ describe('Test of Profile Router', () => {
             contact: { 
                 mobileNo: '1234567',
                 email: 'rakesh@gmail.com',
-                phoneNo: '9898',
+                phoneNo: '9898', 
                 hidePhone: 'false'
             },
 			profilePhoto: 'myFile-1596799950612.jpeg',
@@ -165,3 +165,4 @@ describe('Test of Profile Router', () => {
 		});
 	})
 })
+ 

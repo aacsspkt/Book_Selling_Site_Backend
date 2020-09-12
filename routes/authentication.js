@@ -14,7 +14,7 @@ function verifyUser(req, res, next) {
             let err = new Error('Token could not be found!');
             err.status = 401;
             return next(err);
-        } else { // verified!
+        } else { 
 			req.user = payload;
             next();
         }

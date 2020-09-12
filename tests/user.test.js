@@ -11,7 +11,7 @@ require('./setup');
 let userId;
 describe('Test of User Route', () => {
 	test('should be able to register a admin', () => {
-		return request(app).post('/users/register')
+		return request(app).post('/users/register') 
 		.send({
 			username: 'test12346',
 			password: 'test1234',
@@ -37,21 +37,28 @@ describe('Test of User Route', () => {
 			expect(res.statusCode).toBe(201);
 			expect(res.body.username).toBe('321test');
 			expect(res.body.email).toBe('test@gmail.com');
-			expect(res.body.role).toBe('normal');
+			expect(res.body.role).toBe('normal'); 
 		})
 	})
 
-	test('should NOT be able to register a user with short username and password', () => {
+	test('should NOT be able to register a user with short username, password and email', () => {
 		return request(app).post('/users/register')
 		.send({
 			username: 'te',
 			password: 'ps',
-			email: 'test@gmail.com', 
-		}).then((res) => {
-			expect(res.statusCode).toBe(400);
+			email: 'tem',  
+		}).then((res) => { 
+			expect(res.statusCode).toBe(400);  
 			expect(res.body.message.username).toBe("Username must be between 6 and 30 characters.");
-			expect(res.body.message.password).toBe("Password must be between 6 and 30 characters.");
-		})
+		}) 
+	})
+	test('should NOT be able to register a user with no info', () => {
+		return request(app).post('/users/register')
+		.send({
+		 
+		}).then((res) => { 
+			expect(res.statusCode).toBe(400);  
+		}) 
 	})
 	test('should NOT be able to register a user with duplicate username', () => {
 		return request(app).post('/users/register')
