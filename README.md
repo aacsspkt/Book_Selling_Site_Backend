@@ -22,6 +22,8 @@ With this site, a user can sell new as well as old books to any user. This websi
 * Backend: https://github.com/rakesh-gyawali/Book_Selling_Site_Backend.git
 
 ## Main technologies and libraries used
+* Node version: 14.16.0
+* MongoDB version: 4.4.1 Community
 * dotenv version: 8.2.0
 * express version: 4.17.1
 * jsonwebtoken version: 8.5.1
