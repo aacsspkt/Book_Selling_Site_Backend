@@ -1,30 +1,29 @@
-
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const profileSchema = new mongoose.Schema({
 	firstName: {
-        type: String,
-        required: true
-    },
-    lastName: {
-        type: String,
-        required: true
-    },
+		type: String,
+		required: true,
+	},
+	lastName: {
+		type: String,
+		required: true,
+	},
 	address: {
 		streetAddress: {
 			type: String,
-			required: true
+			required: true,
 		},
 		cityName: {
 			type: String,
-			required: true
+			required: true,
 		},
-		areaLocation: {   
+		areaLocation: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'District',
-			required: true
-		}
+			ref: "District",
+			required: true,
+		},
 	},
-	contact: { 
+	contact: {
 		mobileNo: {
 			type: String,
 		},
@@ -33,21 +32,21 @@ const profileSchema = new mongoose.Schema({
 		},
 		hidePhone: {
 			type: Boolean,
-			default: false
-		}
+			default: false,
+		},
 	},
 	profilePhoto: {
 		type: String,
 	},
 	numberOfActiveAds: {
-        type: Number,
-        min: 0,
-        default: 0
+		type: Number,
+		min: 0,
+		default: 0,
 	},
 	user: {
 		type: mongoose.Types.ObjectId,
-		ref:'User'
-	}
+		ref: "User",
+	},
 });
 
-module.exports = mongoose.model('Profile', profileSchema);
+module.exports = mongoose.model("Profile", profileSchema);

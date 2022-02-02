@@ -15,7 +15,7 @@ const imageFilter = (req, file, cb) => {
         let err = new Error('Only image files are allowed!');
         err.status = 400;
         return cb(err, false);
-	}
+    }
     cb(null, true);
 }
 
@@ -28,8 +28,8 @@ const upload = multer({
 })
 
 router.route('/')
-.post(upload.single('myFile'), (req, res, next) => {
-    res.json({file: req.file});
-});
+    .post(upload.single('myFile'), (req, res, next) => {
+        res.json({ file: req.file });
+    });
 
 module.exports = router; 

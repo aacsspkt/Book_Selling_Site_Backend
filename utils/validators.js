@@ -15,13 +15,13 @@ const RegisterInput = (data) => {
         }
     } else errors.password = 'Password is required.';
 
-	if (data.email) {
-        if (!validator.isLength(data.email.trim(), { min: 5})) {
+    if (data.email) {
+        if (!validator.isLength(data.email.trim(), { min: 5 })) {
             errors.password = 'Email cannot be less than 5 characters.';
         }
     } else errors.password = 'Email is required.';
 
-  
+
     return {
         errors,
         isValid: Object.keys(errors).length === 0

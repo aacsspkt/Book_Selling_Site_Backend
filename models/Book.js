@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const bookSchema = new mongoose.Schema({
-	title: {
+    title: {
         type: String,
         maxlength: 100,
         required: true,
@@ -9,42 +9,43 @@ const bookSchema = new mongoose.Schema({
     author: {
         type: String,
         maxlength: 50,
-        required: true
+        required: true,
     },
     publication: {
         type: String,
         maxlength: 50,
-        required: true
+        required: true,
     },
     image: {
         type: String,
-        required: true
+        required: true,
     },
     condition: {
         type: String,
-		enum: ['New', 'Old'],
-		required: true
+        enum: ["New", "Old"],
+        required: true,
     },
     deliveryArea: {
         type: String,
-		enum: ['Near my area', 'Within city', 'All over Nepal'],
-		required: true
+        enum: ["Near my area", "Within city", "All over Nepal"],
+        required: true,
     },
-	cost: {
-		type: Number,
-		required: true
-	},
+    cost: {
+        type: Number,
+        required: true,
+    },
     category: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
-        required: true
-	},
-	owner: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Profile',
-		required: true
-	}
+        ref: "Category",
+        required: true,
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Profile",
+        required: true,
+    },
 },
-{timestamps: true});
+    { timestamps: true }
+);
 
-module.exports = mongoose.model('Book', bookSchema); 
+module.exports = mongoose.model("Book", bookSchema);

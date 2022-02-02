@@ -5,7 +5,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const userRouter = require('./routes/userRouter');
-const profileRouter = require	('./routes/profileRouter');
+const profileRouter = require('./routes/profileRouter');
 const bookRouter = require('./routes/bookRouter');
 const categoryRouter = require('./routes/categoryRouter');
 const districtRouter = require('./routes/districtRouter');
@@ -13,16 +13,16 @@ const uploadRouter = require('./routes/upload');
 
 const app = express();
 app.use(cors());
-mongoose.connect(process.env.DbURI,{
+mongoose.connect(process.env.DbURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: true
 })
-.then(()=> console.log('----------------- Database server connected --------------------'))
-.catch((err) => console.log(err));
+    .then(() => console.log('----------------- Database server connected --------------------'))
+    .catch((err) => console.log(err));
 
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
@@ -36,7 +36,7 @@ app.use('/api/categories', categoryRouter);
 app.use('/api/districts', districtRouter);
 app.use('/api/uploads', uploadRouter);
 
-app.use((req, res, next) =>  {
+app.use((req, res, next) => {
     let err = Error('Error');
     err.status = 404;
     next(err);
@@ -50,6 +50,6 @@ app.use((err, req, res, next) => {
     })
 })
 
-app.listen(process.env.Port,  () => {
+app.listen(process.env.Port, () => {
     console.log(`Server is running at localhost:${process.env.Port}`);
 });
